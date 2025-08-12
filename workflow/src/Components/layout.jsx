@@ -3,7 +3,10 @@ import React from "react";
 
 
 function Layout(){
-
+ 
+  const store = window.localStorage
+  let isAuthenticated = store.getItem("isAuthenticated");
+  
   console.log('test');
   return (
     <>
@@ -23,6 +26,7 @@ function Layout(){
         <li><Link to="/apropos" className="btn btn-ghost">A Propos De Nous</Link></li>
         <li><Link to="/messageUser" className="btn btn-ghost">Avis De Nos Utilisateur</Link></li>
         <li><Link to="/profil" className="btn btn-ghost">proli user</Link></li>
+        <li><Link to="/catgorie" className="btn btn-ghost">Nos categories</Link></li>
       </ul>
     </div>
     <a className="btn btn-ghost text-xl">les l'ame de la plume</a>
@@ -37,7 +41,8 @@ function Layout(){
       <li><Link to="/apropos" className="btn btn-ghost">A Propos De Nous</Link></li>
       <li><Link to="/messageUser" className="btn btn-ghost">Vos Avis</Link></li>
       <li><Link to="/write_article" className="btn btn-ghost">ecrire l'article</Link></li>
-      <li><Link to="/dashboard" className="btn btn-ghost">dashboard</Link></li>
+      <li><Link to="/catgorie" className="btn btn-ghost">Nos categories</Link></li>
+      { !isAuthenticated ? <li><Link to="/dashboard" className="btn btn-ghost">dashboard</Link></li> : ""}
     </ul>
   </div>
   <div className="navbar-end gap-2" >

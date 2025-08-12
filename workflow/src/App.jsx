@@ -13,6 +13,9 @@ import ArticleDetail from './Components/ArticleDetail';
 import AboutUs from './Components/apropos';
 import CreateArticle from './Components/write_art';
 import Dashboard from './Components/Tb';
+import Logout from './Components/logout'
+import Categories from './Components/categorie'
+import CategorieDetail from './Components/categoriDetail'
 
 function App(){
   return(
@@ -28,7 +31,10 @@ function App(){
           <Route path="/inscription" element={<InscriptionForm/>} />
           <Route path="/article/:id" element={<ArticleDetail />} />
           <Route path="/apropos" element={<AboutUs />} />
+          <Route path="/categorie/:pk" element={<CategorieDetail />} />
+          <Route path="/logout" element={<Logout />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/catgorie" element={<Categories />} />
           <Route path="/write_article" element={<CreateArticle />} />
         </Route>
       </Routes>

@@ -13,6 +13,8 @@ function Blog() {
         const response = await axios.get("http://localhost:8000/api/articles/");
         const sortedArticles = response.data.sort((a, b) => new Date(b.date_creation) - new Date(a.date_creation)); // Tri des articles par date de création, du plus récent au plus ancien
         setArticles(sortedArticles); // Mettre à jour l'état avec les articles triés
+        console.log("*******************************************************************")
+        console.log(response.data)
         setLoading(false);
       } catch (err) {
         setError("Impossible de charger les articles. Veuillez vérifier votre connexion au serveur.");
@@ -67,7 +69,7 @@ function Blog() {
               >
                 <figure className="h-56 overflow-hidden">
                   <img
-                    src={article.image ? `http://localhost:8000${article.image}` : 'https://placehold.co/600x400/374151/FFF?text=Image+Manquante'}
+                    src={article.image}
                     alt={article.titre}
                     className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
                   />

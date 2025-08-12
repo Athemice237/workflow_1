@@ -1,4 +1,3 @@
-// src/Components/LikeButton.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -8,24 +7,22 @@ const LikeButton = ({ articleId }) => {
 
     const API_URL = "http://localhost:8000/api";
 
-    // 1. Fonction pour vérifier l'état du like et récupérer le nombre total de likes
     useEffect(() => {
+
         const fetchLikes = async () => {
             try {
                 const accessToken = localStorage.getItem("access_token");
                 const headers = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
 
-                // Requête pour obtenir le nombre total de likes pour cet article
-                const response = await axios.get(`${API_URL}/articles/${articleId}/likes/`); // Endpoint à créer si tu veux le nombre de likes
+                
+                const response = await axios.get(`${API_URL}/articles/${articleId}/likes/`);
 
-                // Si tu veux vérifier si l'utilisateur connecté a déjà liké
-                // Il faudrait un endpoint spécifique pour cela
+           
                 if (accessToken) {
                     const userLikedResponse = await axios.get(`${API_URL}/articles/${articleId}/is_liked/`, { headers });
                     setIsLiked(userLikedResponse.data.is_liked);
                 }
 
-                // setLikeCount(response.data.count);
             } catch (err) {
                 console.error("Erreur de chargement des likes:", err);
             }
@@ -34,7 +31,6 @@ const LikeButton = ({ articleId }) => {
         fetchLikes();
     }, [articleId]);
 
-    // 2. Fonction pour gérer le clic sur le bouton
     const handleLikeClick = async () => {
         const accessToken = localStorage.getItem("access_token");
 
@@ -45,7 +41,6 @@ const LikeButton = ({ articleId }) => {
 
         try {
             if (isLiked) {
-                // Si l'article est déjà liké, on envoie une requête DELETE pour le retirer
                 await axios.delete(`${API_URL}/articles/${articleId}/like/`, {
                     headers: {
                         Authorization: `Bearer ${accessToken}`,
@@ -54,7 +49,7 @@ const LikeButton = ({ articleId }) => {
                 setIsLiked(false);
                 setLikeCount(prevCount => prevCount - 1);
             } else {
-                // Sinon, on envoie une requête POST pour l'ajouter
+
                 await axios.post(
                     `${API_URL}/articles/${articleId}/like/`,
                     {},

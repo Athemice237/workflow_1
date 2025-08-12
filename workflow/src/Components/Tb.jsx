@@ -56,11 +56,6 @@ const Dashboard = () => {
     fetchUserData();
   }, [navigate]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("access_token");
-    navigate("/login");
-  };
-
   if (loading) {
     return (
       <div className="min-h-screen bg-base-200 p-6 flex items-center justify-center">
@@ -104,7 +99,7 @@ const Dashboard = () => {
             <div className="mt-2 space-y-2">
               <Link to="/ecrire" className="btn btn-sm btn-primary w-full">Nouvel article</Link>
               <Link to="/blog" className="btn btn-sm btn-secondary w-full">Voir le blog</Link>
-              <button onClick={handleLogout} className="btn btn-sm btn-error w-full">Se déconnecter</button>
+              <Link to="/logout" className="btn btn-sm btn-error w-full">Déconnexion</Link>
             </div>
           </div>
         </div>

@@ -7,6 +7,7 @@ function MessageList() {
   const [error, setError] = useState(null);
 
   const API_URL = "http://localhost:8000/api";
+  
 
   useEffect(() => {
     const fetchMessages = async () => {

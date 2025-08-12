@@ -8,12 +8,16 @@ const Login = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  let isAuthenticated = true;
+
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
  //
+
+ 
     const loginData = {
       username,
       password,
@@ -27,11 +31,14 @@ const Login = () => {
 
       //  stocke le token d'accès pour les requêtes sécurisées
       localStorage.setItem("access_token", response.data.access);
-
+      localStorage.setItem("isAuthenticated", isAuthenticated);
+      console.log(isAuthenticated)
+      //localStorage.removeItem("access_token")
       navigate("/dashboard"); // si connexion bon direction tb 
     } catch (err) {
       setLoading(false);
       console.error("Échec de la connexion :", err);
+      localStorage.setItem("isAuthenticated", "false"); 
       if (err.response && err.response.data) {
         setError(Object.values(err.response.data).flat().join(' '));
       } else {

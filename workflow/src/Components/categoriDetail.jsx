@@ -2,21 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 
-function ArticleDetail() {
-  const [article, setArticle] = useState(null);
+function CategorieDetail() {
+  const [categories, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { id } = useParams(); // Récupérons l'id de l'article à partir de l'URL
+  const { pk } = useParams(); // Récupérons l'id de l'article à partir de l'URL
 
   useEffect(() => {
-    // Fonction  fleché pour récupérer les détails de l'article à partir de l'url
+    // Fonction pour récupérer les détails de l'article à partir de l'API
     const fetchArticle = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/articles/${id}/`);
+        const response = await axios.get(`http://localhost:8000/api/categories/${pk}/`);
         setArticle(response.data);
+        console.log("************************************");
+        console.log(response.data)
         setLoading(false); // Mettons à jour l'état de chargement une fois les données récupérées
       } catch (err) {
-        setError("Impossible de charger l'article.");
+        setError("Impossible de charger la categorie.");
         setLoading(false); // Mettons à jour l'état d'erreur si la requête échoue
         console.error("Erreur de chargement de l'article :", err.message);
       }
@@ -28,11 +30,10 @@ function ArticleDetail() {
   if (loading) {
     return <div className="text-center py-20">
       <span className="loading loading-spinner loading-lg"></span>
-      <p className="mt-4 text-xl">Chargement de l'article...</p>
+      <p className="mt-4 text-xl">Chargement de la categorie...</p>
     </div>;
   }
 
-  // Affichons un message d'erreur si la requête a échoué
   if (error) {
     return <div className="text-center py-20 text-red-500">
       <h2 className="text-2xl font-bold mb-4">{error}</h2>
@@ -40,11 +41,11 @@ function ArticleDetail() {
     </div>;
   }
 
-  // Affichons un message si aucun article n'a été trouvé
-  if (!article) {
+ 
+  if (!categories) {
     return (
       <div className="text-center py-20">
-        <h2 className="text-2xl font-bold mb-4">Article introuvable</h2>
+        <h2 className="text-2xl font-bold mb-4">Categorie introuvable</h2>
         <Link to="/" className="btn btn-primary">Retour à la page d'accueil</Link>
       </div>
     );
@@ -52,16 +53,16 @@ function ArticleDetail() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
-      {article.image && ( // Vérifions si l'article a une image avant de l'afficher
+      {categories.image && ( // Vérifions si la categorie  a une image avant de l'afficher
         <img
-        src={article.image}
-        alt={article.titre}
+        src={categories.image}
+        alt={categories.titre}
         className="w-full h-auto object-contain rounded-lg mb-6"
       />
       )}
       
-      <h1 className="text-4xl font-bold mb-4">{article.titre}</h1>
-      <p className="text-lg text-gray-700 leading-relaxed whitespace-pre-line">{article.contenu}</p>
+      <h1 className="text-4xl font-bold mb-4">{categories.titre}</h1>
+      <p className="text-lg text-gray-700 leading-relaxed whitespace-pre-line">{categories.contenu}</p>
       
       <div className="mt-8">
         <Link to="/blog" className="btn btn-outline btn-secondary">← Retour à la page d'accueil</Link>
@@ -70,4 +71,4 @@ function ArticleDetail() {
   );
 }
 
-export default ArticleDetail;
+export default CategorieDetail;
